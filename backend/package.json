@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:backend": "bun build index.ts --outdir=dist --target=bun",
-    "start:backend": "bun run dist/index.js",
-    "render:build": "bun install && npx prisma generate && npm run build:backend"
+    "start:backend": "node dist/index.js",
+    "render:build": "bun install && npx prisma generate && tsc -b"
   },
   "keywords": [],
   "author": "",
