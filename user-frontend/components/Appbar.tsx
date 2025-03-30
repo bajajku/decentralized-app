@@ -6,9 +6,7 @@ import {
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect } from 'react';
 import axios from 'axios';
-// import { BACKEND_URL } from '@/utils';
-
-const BACKEND_URL = "https://localhost:3000";
+import { BACKEND_URL } from '@/utils';
 
 export const Appbar = () => {
     const { publicKey , signMessage} = useWallet();

@@ -7,7 +7,6 @@ import { TOTAL_DECIMALS, WORKER_JWT_SECRET } from "../config";
 import { getNextTask } from "../db";
 import { createSubmissionInput } from "../types";
 import { Connection, Keypair, PublicKey, SystemProgram, Transaction, sendAndConfirmTransaction } from "@solana/web3.js";
-import { privateKey } from "../privateKey";
 import { decode } from "bs58";
 
 const connection = new Connection(process.env.RPC_URL ?? "");
@@ -52,6 +51,12 @@ router.post("/payout", workerMiddleware, async (req, res) => {
 
     console.log(worker.address);
 
+    const privateKey = process.env.PRIVATE_KEY;
+    if (!privateKey) {
+        return res.status(411).json({
+            message: "Private key not found"
+        })
+    }
     const keypair = Keypair.fromSecretKey(decode(privateKey));
 
     // TODO: There's a double spending problem here
