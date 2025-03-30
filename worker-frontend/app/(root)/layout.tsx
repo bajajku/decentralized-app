@@ -17,7 +17,7 @@ export default function RootLayout({
   const network = WalletAdapterNetwork.Mainnet;
 
   // You can also provide a custom RPC endpoint.
-  const endpoint = "your_rpc_url";
+  const endpoint = process.env.NEXT_PUBLIC_RPC_URL;
 
   const wallets = useMemo(
       () => [],
@@ -25,7 +25,7 @@ export default function RootLayout({
   );
 
     return (
-    <ConnectionProvider endpoint={endpoint}>
+    <ConnectionProvider endpoint={endpoint || ''}>
         <WalletProvider wallets={wallets} autoConnect>
             <WalletModalProvider>
                 {children}
