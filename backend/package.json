@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:backend": "bun build index.ts --outdir=dist --target=bun",
+    "start:backend": "bun run dist/index.js",
+    "render:build": "bun install && npx prisma generate && npm run build:backend"
   },
   "keywords": [],
   "author": "",
