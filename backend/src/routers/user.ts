@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
-import { JWT_SECRET } from "../index";
+import { JWT_SECRET } from "../config";
 import { authMiddleware } from "../middleware";
 import { S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";

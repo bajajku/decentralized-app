@@ -9,7 +9,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '@/utils';
 
 export const Appbar = () => {
-    const { publicKey , signMessage} = useWallet();
+    const { publicKey, signMessage} = useWallet();
     const [balance, setBalance] = useState(0);
 
     async function signAndSend() {

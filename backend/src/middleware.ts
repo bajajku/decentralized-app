@@ -1,31 +1,31 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import { JWT_SECRET, WORKER_JWT_SECRET } from "./config";
+import jwt from "jsonwebtoken";
 
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+    const token = req.headers["authorization"] ?? "";
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-    const token = req.headers.authorization;
-    if (!token) {
-        res.status(401).json({ message: "Unauthorized" });
-        return;
-    }
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
+        console.log(decoded);
         // @ts-ignore
-        if(decoded.userId){
+        if (decoded.userId) {
             // @ts-ignore
             req.userId = decoded.userId;
-            next();
+            return next();
         } else {
-            res.status(403).json({ message: "Unauthorized" });
+            return res.status(403).json({
+                message: "You are not logged in"
+            })    
         }
-    } catch (error) {
-        res.status(403).json({ message: "Unauthorized" });
+    } catch(e) {
+        return res.status(403).json({
+            message: "You are not logged in"
+        })
     }
 }
 
-
-export function workerMiddleware(req: Request, res: Response, next: NextFunction): void { 
+export function workerMiddleware(req: Request, res: Response, next: NextFunction) { 
     const authHeader = req.headers["authorization"] ?? "";
 
     console.log(authHeader);
@@ -35,15 +35,15 @@ export function workerMiddleware(req: Request, res: Response, next: NextFunction
         if (decoded.userId) {
             // @ts-ignore
             req.userId = decoded.userId;
-            next();
+            return next();
         } else {
-            res.status(403).json({
+            return res.status(403).json({
                 message: "You are not logged in"
-            });    
+            })    
         }
     } catch(e) {
-        res.status(403).json({
+        return res.status(403).json({
             message: "You are not logged in"
-        });
+        })
     }
 }

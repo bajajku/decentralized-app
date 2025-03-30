@@ -1,16 +1,14 @@
 import express from "express";
-import workerRouter from "./routers/worker";
-import userRouter from "./routers/user";
+import userRouter from "./routers/user"
+import workerRouter from "./routers/worker"
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
-export const JWT_SECRET = "secret";
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});     
-
-app.use("/worker", workerRouter);
 app.use("/user", userRouter);
+app.use("/worker", workerRouter);
+
+app.listen(3000)
